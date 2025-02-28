@@ -1,27 +1,30 @@
-"use client"
+"use client";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
-import { useSessionQuery } from "@/lib/hooks/useSession"
-import { signOut } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+const useSession = () => useQuery({
+  queryKey: ["session"],
+  queryFn: () => null, // No fetch function needed for client state
+  staleTime: Infinity
+});
 
-export default function Dashboard() {
-  const { data: session, isLoading } = useSessionQuery()
-  const router = useRouter()
+const Profile = () => {
+  const { data: user } = useSession();
+  const { logoutMutation } = useAuth();
 
-  useEffect(() => {
-    if (!isLoading && !session?.user) {
-      router.push("/login")
-    }
-  }, [session, isLoading])
-
-  if (isLoading) return <p>Loading...</p>
-  if (!session?.user) return null
+  if (!user) return <p>Please log in.</p>;
 
   return (
     <div>
-      <h2>Welcome, {session.user.email}</h2>
-      <button onClick={() => signOut()}>Logout</button>
+      <p>Welcome! Your phone: {user.phone}</p>
+      <button
+        onClick={() => logoutMutation.mutate()}
+        className="bg-red-500 text-white p-2 mt-2"
+      >
+        Logout
+      </button>
     </div>
-  )
-}
+  );
+};
+
+export default Profile;

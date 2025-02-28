@@ -1,61 +1,106 @@
 "use client"
-
-import { useState } from "react"
-import { signIn } from "next-auth/react"
+import { useAuth } from "@/lib/hooks/useAuth"
+import { addToast, Input } from "@heroui/react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useSessionQuery } from "@/lib/hooks/useSession"
-import { Button, Modal, useDisclosure } from "@heroui/react"
+import { useState } from "react"
 
-export default function LoginPage() {
-    
-    const {isOpen, onOpen, onOpenChange} = useDisclosure()
-  const { data: session } = useSessionQuery()
+
+const Login = () => {
+
+  const { sendCodeMutation, verifyCodeMutation } = useAuth()
+  const [phone, setPhone] = useState("")
+  const [code, setCode] = useState("")
+  const [step, setStep] = useState(1)
+  const [message, setMessage] = useState('')
+  
   const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-
-  if (session?.user) {
-    router.push("/dashboard")
-    return null
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // Check if the user exists in localStorage
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
-    const userExists = users.some((user: { email: string; password: string }) => user.email === email)
-
-    if (!userExists) {
-      setError("User not found. Please sign up first.")
-      return
-    }
-
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    })
-
-    if (res?.error) {
-      setError("Invalid credentials")
+  const phonePattern = /^[0-9]{9}$/
+  
+  const handleSendCode = async () => {
+    
+    if (!phone || !phonePattern.test(phone)) {
+      setMessage("Please enter a valid phone number.")
     } else {
-      router.push("/dashboard")
+      await sendCodeMutation.mutateAsync(phone)
+      setStep(2)
     }
   }
 
-    return (
-        <>
-          <Button onPress={onOpen}>Login</Button>
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-      <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button type="submit">Login</button>
-      </form>
-      {error && <p>{error}</p>}
-            </Modal>
+  const handleVerifyCode = async () => {
+    try {
+      await verifyCodeMutation.mutateAsync(code)
+      addToast({
+              description: "Login successful!",
+              color: "success",
+      })
+
+      router.push('/dashboard')
+      
+    } catch (error) {
+      setMessage("Invalid code, try again.")
+    }
+  }
+
+  return (
+    <div className="p-4 border rounded w-80 sm:w-96 min-[1900px]:w-[500px] h-96 place-self-center mt-4 place-content-center space-y-7">
+      <Link href={"/"} className="text-center">
+        <p className="font-bold text-red-500 text-2xl font-mono">DigiKala</p>
+      </Link>
+      {(step === 1 || !phonePattern.test(phone)) && <>
+        <h2 className="text-sm font-sans text-zinc-700">
+          Hi ! <br />Please enter your phone number
+        </h2>
+        <Input
+          startContent={"09"}
+          isRequired
+          isClearable
+          size="lg"
+          type="text"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Enter your phone"
+          pattern="^[0-9]{9}$"
+        />
+        <h1 className="text-red-600">
+        {message}
+      </h1>
+        <button
+          onClick={handleSendCode}
+          className="bg-blue-600 text-white p-2 w-full mt-2 rounded"
+        >
+          Login
+        </button>
+      </>
+      }
+      {(step === 2 && phonePattern.test(phone)) && <>
+          <h2 className="text-sm font-sans text-zinc-700">Enter Verification Code</h2>
+          <Input
+            type="text"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder="Enter code"
+        />
+        <h1>
+        {message}
+         </h1>
+          <button
+            onClick={handleVerifyCode}
+            className="bg-green-500 text-white p-2 w-full mt-2"
+          >
+            Verify & Login
+        </button>
+        <button
+            onClick={() => setStep(1)}
+            className="bg-zinc-400 text-white p-2 w-full mt-2"
+          >
+            Previous
+        </button>
         </>
+      }
+
+    </div>
   )
 }
+
+export default Login

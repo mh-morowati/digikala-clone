@@ -42,7 +42,7 @@ const Location = () => {
       <Dropdown>
 
          <DropdownTrigger className="cursor-pointer">
-          <p>
+          <p className="text-sm">
             {selectedProvince ? selectedProvince.name + " , " : " انتخاب نشده , "}
           </p>
         </DropdownTrigger>
@@ -60,7 +60,9 @@ const Location = () => {
         
       </Dropdown>
 
-      <p>{selectedCity ? selectedCity : " انتخاب نشده "}</p>
+      <p className="text-sm">
+        {selectedCity ? selectedCity : " انتخاب نشده "}
+      </p>
 
       {messageShow && <h1
         className="absolute top-16 bg-slate-700 text-white p-2 rounded"

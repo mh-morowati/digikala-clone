@@ -12,14 +12,21 @@ import AccountInfo from "./AccountInfo"
 import { PiShoppingCartSimple } from "react-icons/pi"
 import ResponsiveNavbar from "./ResponsiveNav"
 import Location from "./location/location"
-import { useSessionQuery } from "@/lib/hooks/useSession"
 import Link from "next/link"
-import Login from "../login/Login"
+import { useQuery } from "@tanstack/react-query"
+import { useAuth } from "@/lib/hooks/useAuth"
+
+const useSession = () => useQuery({
+  queryKey: ["session"],
+  queryFn: () => null, // No fetch function needed for client state
+  staleTime: Infinity
+});
 
   
 const Header = () => {
 
-  const { data: session } = useSessionQuery()
+   const { data: user } = useSession();
+  const { logoutMutation } = useAuth();
   
   return (<>
       <ResponsiveNavbar/>
@@ -28,8 +35,8 @@ const Header = () => {
         
         <NavbarContent justify="start">
           
-          <NavbarBrand className="mr-4 gap-4 hidden lg:flex">
-          <Link href={"/"}>
+          <NavbarBrand className="mr-4 hidden lg:flex">
+          <Link href={"/"} className="flex gap-4">
           <SiShopware color="red" size={25} />
             <p className="font-bold text-red-500 text-2xl font-mono">
               DigiKala
@@ -68,8 +75,8 @@ const Header = () => {
           </NavbarItem>
           
           <NavbarItem>
-          {session ? <AccountInfo /> :
-            <Login />}
+          {user ? <AccountInfo /> : 
+          <Link href={"/login"}>Login</Link>}
           </NavbarItem>
 
       </NavbarContent>
