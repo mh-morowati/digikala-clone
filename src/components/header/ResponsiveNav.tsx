@@ -6,11 +6,15 @@ import { GiShoppingCart } from "react-icons/gi"
 import { MdOutlineExplore } from "react-icons/md"
 import { PiUserCircleLight } from "react-icons/pi"
 
+type Props = {
+  user: any
+}
 
-const ResponsiveNavbar = () => {
+const ResponsiveNavbar = (props: Props) => {
 
+  const {user} = props
     const pathname = usePathname()
-    
+  
   return (<> 
    <Navbar
       height={50}
@@ -21,15 +25,16 @@ const ResponsiveNavbar = () => {
       <div
         className="flex gap-10 justify-evenly flex-1 min-[300px]:gap-14 min-[500px]:gap-32 min-[375px]:gap-20"
       >
-        <NavbarItem>
-          <Link
+         <Link
             color="foreground"
-            href="explore"
-            className={pathname.startsWith("/explore") ? "text-blue-600" : "text-slate-800"}
+            href="/"
+            className={pathname.endsWith("/") ? "text-blue-600" : "text-slate-800"}
           >
+        <NavbarItem>
+         
           <BiSolidHomeAlt2 />
+          </NavbarItem>
           </Link>
-        </NavbarItem>
         
         <NavbarItem
           className={pathname.startsWith("/search") ? "text-blue-600" : "text-slate-800"}
@@ -38,36 +43,33 @@ const ResponsiveNavbar = () => {
         </NavbarItem>
         
         <NavbarItem isActive>
-          <Link
-            href=""
-            aria-current="page"
-            color="secondary"
-            className={pathname.startsWith("/booking") ? "text-blue-600" : "text-slate-800"}
-          >
+        
            <GiShoppingCart />
-          </Link>
             </NavbarItem>
             
         <NavbarItem isActive>
-          <Link
-            href=""
-            aria-current="page"
-            color="secondary"
-            className={pathname.startsWith("/booking") ? "text-blue-600" : "text-slate-800"}
-          >
+      
            <MdOutlineExplore />
-          </Link>
             </NavbarItem>
             
         <NavbarItem isActive>
-          <Link
-            href=""
+        { user ? (<Link
+            href="/dashboard"
             aria-current="page"
             color="secondary"
-            className={pathname.startsWith("/booking") ? "text-blue-600" : "text-slate-800"}
+            className={pathname.startsWith("/dashboard") ? "text-blue-600" : "text-slate-800"}
           >
            <PiUserCircleLight />
-          </Link>
+          </Link> ) : ( <Link
+            href="/login"
+            aria-current="page"
+            color="secondary"
+            className={pathname.startsWith("/login") ? "text-blue-600" : "text-slate-800"}
+          >
+           <PiUserCircleLight />
+            </Link>
+            )
+          }
         </NavbarItem>
       </div>
     </Navbar>

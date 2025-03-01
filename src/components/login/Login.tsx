@@ -9,7 +9,7 @@ import { useState } from "react"
 const Login = () => {
 
   const { sendCodeMutation, verifyCodeMutation } = useAuth()
-  const [phone, setPhone] = useState("")
+  const [phone, setPhone] = useState("121234567")
   const [code, setCode] = useState("")
   const [step, setStep] = useState(1)
   const [message, setMessage] = useState('')
@@ -43,14 +43,20 @@ const Login = () => {
   }
 
   return (
-    <div className="p-4 border rounded w-80 sm:w-96 min-[1900px]:w-[500px] h-96 place-self-center mt-4 place-content-center space-y-7">
+    <div
+      className=
+      "p-4 border rounded w-80 sm:w-96 min-[1900px]:w-[500px] h-96 place-self-center mt-4 place-content-center space-y-7"
+    >
+
       <Link href={"/"} className="text-center">
         <p className="font-bold text-red-500 text-2xl font-mono">DigiKala</p>
       </Link>
+
       {(step === 1 || !phonePattern.test(phone)) && <>
         <h2 className="text-sm font-sans text-zinc-700">
           Hi ! <br />Please enter your phone number
         </h2>
+
         <Input
           startContent={"09"}
           isRequired
@@ -64,7 +70,8 @@ const Login = () => {
         />
         <h1 className="text-red-600">
         {message}
-      </h1>
+        </h1>
+        
         <button
           onClick={handleSendCode}
           className="bg-blue-600 text-white p-2 w-full mt-2 rounded"
@@ -73,6 +80,7 @@ const Login = () => {
         </button>
       </>
       }
+      
       {(step === 2 && phonePattern.test(phone)) && <>
           <h2 className="text-sm font-sans text-zinc-700">Enter Verification Code</h2>
           <Input

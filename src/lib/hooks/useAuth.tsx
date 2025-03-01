@@ -13,6 +13,7 @@ export const useAuth = () => {
   const sendCodeMutation = useMutation({
 
     mutationFn: async (phone: string) => {
+
       const code = generateRandomCode()
       setVerificationCode(code)
       addToast({
@@ -20,11 +21,13 @@ export const useAuth = () => {
         description: code, 
         color: "success",
       })
+
       return code
     },
   })
 
   const verifyCodeMutation = useMutation({
+    
     mutationFn: async (code: string) => {
       if (code === verificationCode) {
         const user = { phone: sendCodeMutation.variables, isAuthenticated: true }
@@ -38,7 +41,7 @@ export const useAuth = () => {
   // ✅ Logout mutation: Clears session
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      queryClient.removeQueries({ queryKey: ["session"] }) // Clears session data
+        queryClient.setQueryData(["session"], null)
     },
   })
 

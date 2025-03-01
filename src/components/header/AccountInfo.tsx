@@ -5,9 +5,12 @@ import {
     DropdownTrigger,
 } from "@heroui/dropdown"
 import { Avatar} from "@heroui/avatar"
+import { useAuth } from "@/lib/hooks/useAuth"
 
 
 const AccountInfo = () => {
+
+const { logoutMutation } = useAuth()
 
   return (
     <Dropdown placement="bottom-end">
@@ -38,9 +41,9 @@ const AccountInfo = () => {
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="logout" color="danger"   onClick={() => logoutMutation.mutate()}>
               Log Out
-        </DropdownItem>
+           </DropdownItem>
         
       </DropdownMenu>
       

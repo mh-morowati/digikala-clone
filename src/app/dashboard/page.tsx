@@ -1,30 +1,13 @@
-"use client";
-import { useAuth } from "@/lib/hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import Profile from "@/components/login/Profile"
 
-const useSession = () => useQuery({
-  queryKey: ["session"],
-  queryFn: () => null, // No fetch function needed for client state
-  staleTime: Infinity
-});
 
-const Profile = () => {
-  const { data: user } = useSession();
-  const { logoutMutation } = useAuth();
-
-  if (!user) return <p>Please log in.</p>;
-
+const Dashboard = () => {
+  
   return (
     <div>
-      <p>Welcome! Your phone: {user.phone}</p>
-      <button
-        onClick={() => logoutMutation.mutate()}
-        className="bg-red-500 text-white p-2 mt-2"
-      >
-        Logout
-      </button>
+     <Profile/>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Dashboard
