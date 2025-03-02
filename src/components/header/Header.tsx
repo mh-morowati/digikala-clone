@@ -72,7 +72,9 @@ const Header = () => {
           </NavbarItem>
 
           <NavbarItem>
+          <Link href={"/cart"}>
             <PiShoppingCartSimple size={30} />
+          </Link>
           </NavbarItem>
           
           <NavbarItem>

@@ -1,4 +1,5 @@
 "use client"
+import Loading from '@/app/loading'
 import { apiServices } from '@/lib/api/Services'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
@@ -16,6 +17,9 @@ const SelectedProduct = () => {
     refetchOnMount: false  // Prevent refetch on component mount
   })
     
+  if (isloading) {
+    return Loading()
+  }
     return (<div
         className=
         "bg-red-600 w-[99%] h-72 mt-12 rounded place-self-center flex overflow-x-auto overflow-y-hidden place-items-center"

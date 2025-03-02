@@ -5,6 +5,12 @@ const getSelectedProduct = async () => {
     return response.data
 }
 
+const getProduct = async (id:string) => {
+    const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
+    return response.data
+}
+
 export const apiServices = {
-getSelectedProduct
+    getSelectedProduct,
+    getProduct
 }
