@@ -10,7 +10,19 @@ const getProduct = async (id:string) => {
     return response.data
 }
 
+const getAllProducts = async () => {
+    const response = await axios.get("https://api.escuelajs.co/api/v1/products");
+    return response.data
+}
+
+const getProductFromAll = async (id:string) => {
+    const response = await axios.get(`https://api.escuelajs.co/api/v1/products/${id}`);
+    return response.data
+}
+
 export const apiServices = {
     getSelectedProduct,
-    getProduct
+    getProduct,
+    getAllProducts,
+    getProductFromAll
 }

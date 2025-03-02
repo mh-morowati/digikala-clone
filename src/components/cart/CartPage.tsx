@@ -29,14 +29,17 @@ const CartPage = () => {
         setCart(updatedCart)
 };
 
+  const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
+  
   return (
     <div className="place-self-center space-y-4 mt-8 border p-2">
       <h1 className="text-2xl font-bold underline underline-offset-8">Shopping Cart</h1>
       {cart.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
+          <>
         <div>
-          {cart.map((item, index) => (
+             {cart.map((item, index) => (
               <div key={index} className="flex border rounded p-2">
                   
                   <Image src={item.image} alt={''} width={50} height={30} />
@@ -45,7 +48,9 @@ const CartPage = () => {
                            <button onClick={() => handleRemoveOne(item.id)}>➖</button>
             </div>
           ))}
-        </div>
+          </div>
+            <h1>{totalPrice }</h1>
+          </>
       )}
     </div>
   );
