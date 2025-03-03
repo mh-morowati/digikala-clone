@@ -12,6 +12,7 @@ export const useAuth = () => {
 
   const sendCodeMutation = useMutation({
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mutationFn: async (phone: string) => {
 
       const code = generateRandomCode()

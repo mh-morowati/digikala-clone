@@ -15,6 +15,7 @@ const ProductPage = ({id}: Props) => {
        const {
     data: product ,
     isLoading: isloading,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: iserror
   } = useQuery<Product>({
     queryKey: ["Product",id],
