@@ -11,7 +11,6 @@ const SelectedProduct = () => {
       const {
     data: products = [],
     isLoading: isloading,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: iserror
   } = useQuery<Product[]>({
     queryKey: ["selectedProducts"],
@@ -22,6 +21,11 @@ const SelectedProduct = () => {
   if (isloading) {
     return Loading()
   }
+
+  if (iserror) {
+    console.log(iserror)
+  }
+
     return (<div
         className=
         "bg-red-600 w-[99%] h-72 mt-12 rounded place-self-center flex overflow-x-auto overflow-y-hidden place-items-center"

@@ -9,12 +9,13 @@ export const useAuth = () => {
 
   const queryClient = useQueryClient()
   const [verificationCode, setVerificationCode] = useState<string | null>(null)
-
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null)
+  
   const sendCodeMutation = useMutation({
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mutationFn: async (phone: string) => {
 
+        setPhoneNumber(phone)
       const code = generateRandomCode()
       setVerificationCode(code)
       addToast({
@@ -31,7 +32,7 @@ export const useAuth = () => {
     
     mutationFn: async (code: string) => {
       if (code === verificationCode) {
-        const user = { phone: sendCodeMutation.variables, isAuthenticated: true }
+        const user = { phone: phoneNumber, isAuthenticated: true }
         queryClient.setQueryData(["session"], user)
         return user
       }

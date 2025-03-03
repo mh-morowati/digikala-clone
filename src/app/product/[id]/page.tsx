@@ -9,7 +9,7 @@ interface ProductProps {
 
 const Product = ({ params }:ProductProps) => {
     return (<>
-    <ProductPage id={params?.id} />
+    <ProductPage id={params?.id ?? ""} />
     </>)
 }
 

@@ -15,7 +15,6 @@ const ProductPage = ({id}: Props) => {
        const {
     data: product ,
     isLoading: isloading,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: iserror
   } = useQuery<Product>({
     queryKey: ["Product",id],
@@ -50,6 +49,10 @@ const ProductPage = ({id}: Props) => {
     return Loading()
   }
   
+  if (iserror) {
+    console.log(iserror)
+  }
+
     return (<div className='place-self-center space-y-4 mt-8 border p-2'>
         <h1 className='font-bold font-sans text-xl'>{product.title}</h1>
         <Image src={product.image} alt={''} width={200} height={100} />
