@@ -4,6 +4,7 @@ import { apiServices } from '@/lib/api/Services'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Product } from '../types'
 
 const SelectedProduct = () => {
 
@@ -11,7 +12,7 @@ const SelectedProduct = () => {
     data: products = [],
     isLoading: isloading,
     isError: iserror
-  } = useQuery<any[]>({
+  } = useQuery<Product[]>({
     queryKey: ["selectedProducts"],
     queryFn: () => apiServices.getSelectedProduct(),
     refetchOnMount: false  // Prevent refetch on component mount

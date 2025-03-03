@@ -7,7 +7,7 @@ import { MdOutlineExplore } from "react-icons/md"
 import { PiUserCircleLight } from "react-icons/pi"
 
 type Props = {
-  user: any
+  user: string
 }
 
 const ResponsiveNavbar = (props: Props) => {
