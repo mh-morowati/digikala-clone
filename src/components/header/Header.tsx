@@ -18,7 +18,7 @@ import { useQuery } from "@tanstack/react-query"
 
 const useSession = () => useQuery({
   queryKey: ["session"],
-  queryFn: () => null, // No fetch function needed for client state
+  queryFn: () => "", // No fetch function needed for client state
   staleTime: Infinity
 })
 
@@ -29,7 +29,7 @@ const Header = () => {
   
   return (<>
     {/* component for mobile navbar */}
-      <ResponsiveNavbar user={user}/>
+      <ResponsiveNavbar user={user ?? ""}/>
     
       <Navbar isBordered maxWidth="2xl">
         

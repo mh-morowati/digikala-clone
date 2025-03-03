@@ -5,7 +5,7 @@ import { redirect } from "next/navigation"
 
 const useSession = () => useQuery({
   queryKey: ["session"],
-    queryFn: () => null, 
+    queryFn: () => ({ phone: "09123456789", isAuthenticated: true }), 
   staleTime: Infinity
 })
 
