@@ -38,6 +38,7 @@ const Login = () => {
       router.push('/dashboard')
       
     } catch (error) {
+      console.error(error)
       setMessage("Invalid code, try again.")
     }
   }
