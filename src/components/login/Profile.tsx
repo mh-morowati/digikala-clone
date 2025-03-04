@@ -5,7 +5,10 @@ import { redirect } from "next/navigation"
 
 const useSession = () => useQuery({
   queryKey: ["session"],
-    queryFn: () => ({ phone: "09123456789", isAuthenticated: true }), 
+  queryFn: () => {
+    const user = localStorage.getItem("session");
+    return user ? JSON.parse(user) : null;
+  }, 
   staleTime: Infinity
 })
 

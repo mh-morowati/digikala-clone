@@ -7,13 +7,18 @@ const CartPage = () => {
   const [cart, setCart] = useState<Product[]>([]);
 
   useEffect(() => {
+     try {
     const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCart(storedCart);
+    setCart(Array.isArray(storedCart) ? storedCart : []);
+  } catch (error) {
+       setCart([]);
+       console.error(error)
+  }
   }, []);
     
-    const handleRemoveOne = (productId: number) => {
-
-        let updatedCart = JSON.parse(localStorage.getItem("cart") || "[]")
+  const handleRemoveOne = (productId: number) => {
+      
+    let updatedCart = [...cart]
         
   const existingItem = cart.find((item) => item.id === productId);
 
@@ -25,11 +30,11 @@ const CartPage = () => {
     }
   }
 
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
         setCart(updatedCart)
 };
 
-  const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
+  const totalPrice = cart.reduce((acc, item) => acc + (item?.price || 0) * (item?.quantity || 1), 0);
   
   return (
     <div className="place-self-center space-y-4 mt-8 border p-2">

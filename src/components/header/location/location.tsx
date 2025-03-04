@@ -13,7 +13,7 @@ const Location = () => {
   const [selectedCity, setSelectedCity] = useState<string | null>(null)
   const [messageShow, setMessageShow] = useState<boolean>(false)
 
-  const provinces = location.provinces
+  const provinces = location?.provinces || []
   
   return (
     <div
@@ -50,7 +50,7 @@ const Location = () => {
          {selectedProvince &&
         <DropdownMenu>
            {
-            selectedProvince.cities.map(city => (
+            selectedProvince?.cities?.map(city => (
               <DropdownItem key={city.id} onClick={() => setSelectedCity(city.name)}>
                 {city.name}
               </DropdownItem>

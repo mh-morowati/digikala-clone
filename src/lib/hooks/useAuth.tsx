@@ -31,12 +31,17 @@ export const useAuth = () => {
   const verifyCodeMutation = useMutation({
     
     mutationFn: async (code: string) => {
-      if (code === verificationCode) {
+       if (code !== verificationCode) {
+      addToast({
+        description: "Invalid code. Try again.",
+        color: "danger",
+      });
+         return
+    }
         const user = { phone: phoneNumber, isAuthenticated: true }
         queryClient.setQueryData(["session"], user)
         return user
-      }
-      throw new Error("Invalid code")
+      
     },
   })
 

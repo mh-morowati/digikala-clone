@@ -18,7 +18,7 @@ import { useQuery } from "@tanstack/react-query"
 
 const useSession = () => useQuery({
   queryKey: ["session"],
-  queryFn: () => "", // No fetch function needed for client state
+  queryFn: async () => null, // No fetch function needed for client state
   staleTime: Infinity
 })
 

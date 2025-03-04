@@ -7,7 +7,7 @@ import { MdOutlineExplore } from "react-icons/md"
 import { PiUserCircleLight } from "react-icons/pi"
 
 type Props = {
-  user: string
+  user?: string | null
 }
 
 const ResponsiveNavbar = (props: Props) => {
@@ -42,7 +42,7 @@ const ResponsiveNavbar = (props: Props) => {
          <BiCategoryAlt />
         </NavbarItem>
         
-        <NavbarItem isActive>
+        <NavbarItem className={pathname === "/cart" ? "text-blue-600" : "text-slate-800"}>
         
            <GiShoppingCart />
             </NavbarItem>

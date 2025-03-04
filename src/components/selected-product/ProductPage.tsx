@@ -23,8 +23,13 @@ const ProductPage = ({id}: Props) => {
   })
     
      const handleAddToCart = (product: Product) => {
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
+       
+  if (!Array.isArray(cart)) {
+    cart = [];
+       }
+       
   const existingItem = cart.find((item: Product) => item.id === product.id);
 
   if (existingItem) {

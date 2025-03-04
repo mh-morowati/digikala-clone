@@ -1,7 +1,7 @@
 import ProductPage from "@/components/selected-product/ProductPage";
 
 interface ProductProps {
-  params: {
+  params?: {
     id?: string;
   }
 }
