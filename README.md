@@ -5,3 +5,4 @@ this is a project similar online shops i create sign up with next js, product ap
 
 ## libraries i use
 i use hero ui components, tanstak react query and next auth
+
