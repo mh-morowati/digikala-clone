@@ -7,7 +7,7 @@ interface ProductProps {
 }
 
 
-const Product = async ({ params }: Awaited<ProductProps>) => {
+const Product = async ({ params }:ProductProps) => {
   
   if (!params?.id) {
     return <div>Error: Product ID is required.</div>;
