@@ -1,4 +1,5 @@
 import ProductPage from "@/components/selected-product/ProductPage";
+import { FC } from "react";
 
 interface ProductProps {
   params: {
@@ -7,15 +8,15 @@ interface ProductProps {
 }
 
 
-const Product = async ({ params }:ProductProps) => {
+const Product: FC<ProductProps> = ({ params }) => {
   
   if (!params?.id) {
     return <div>Error: Product ID is required.</div>;
   }
 
-    return (<>
-    <ProductPage id={params.id} />
-    </>)
+    return (
+      <ProductPage id={params.id} />
+    )
 }
 
 export default Product
