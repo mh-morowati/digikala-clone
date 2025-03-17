@@ -1,22 +1,17 @@
+"use client";
+
 import ProductPage from "@/components/selected-product/ProductPage";
-import { FC } from "react";
+import { useParams } from "next/navigation";
 
-interface ProductProps {
-  params: {
-    id: string;
-  }
-}
+const Product = () => {
+  const params = useParams();
+  const id = params?.id as string;
 
-
-const Product: FC<ProductProps> = ({ params }) => {
-  
-  if (!params?.id) {
+  if (!id) {
     return <div>Error: Product ID is required.</div>;
   }
 
-    return (
-      <ProductPage id={params.id} />
-    )
-}
+  return <ProductPage id={id} />;
+};
 
-export default Product
+export default Product;
