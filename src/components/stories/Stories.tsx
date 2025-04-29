@@ -19,7 +19,7 @@ const Stories = () => {
 
   useEffect(() => {
   
-    const urls = [...Array(10)].map((_, index) => 
+    const urls = [...Array(20)].map((_, index) => 
       `https://picsum.photos/seed/${index}/200/300`
     )
     setImageUrls(urls)
